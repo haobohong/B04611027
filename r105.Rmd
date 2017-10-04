@@ -1,0 +1,30 @@
+---
+title: "R10/5"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+cs=read.csv("customer.csv")
+library(dplyr)
+```
+### 問題一:找出額度高實際消費低之族群住哪裡
+```{r echo=FALSE}
+test=mutate(cs,cs3=card2spent/cardspent)
+test1=filter(test,cs3<0.3)
+plot(test1$region,test1$cs3)
+```
+
+
+### 問題二:找出特定年齡層(壯年)之結婚與否
+```{r echo=FALSE}
+test2=filter(cs,age>20&age<65)
+plot(test2$marital,test2$age)
+```
+
+
+###問題三 :討論男性的收入與購屋關係
+```{r echo=FALSE}
+test3=filter(cs,gender==1)
+plot(test3$income,test3$homeown)
+```
+
