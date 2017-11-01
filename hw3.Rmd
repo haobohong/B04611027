@@ -1,0 +1,43 @@
+---
+title: "hw3"
+output: html_document
+---
+### 作業三 B04611027 生機三 洪浩博
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+### 首先將library 匯入
+```{r echo=FALSE}
+library(rvest)
+library(magrittr)
+library("jiebaR")
+library(wordcloud2)
+
+```
+### 再來到網站上探勘這次探勘目標是娛樂新聞
+```{r echo=TRUE}
+title=read_html("http://ent.ltn.com.tw/") %>%
+      html_nodes(".boxTitle .listA .list_title") %>%
+      html_text()  %>%iconv("UTF-8")
+```
+### 把資料中的數字清除因為不是我們的目標
+```{r echo=TRUE}
+i<-0
+for(x in title ) {title[i]<-gsub("[0-9]","",x) 
+i<-i+1}
+Sys.setlocale(category = "LC_ALL", locale = "cht")
+```
+### 再來將資料換成dataframe的形式
+```{r echo=TRUE}
+cc = worker()
+mlb <-table(cc[title])
+mlb<-data.frame(mlb)
+```
+### 製作成電子雲
+```{r echo=TRUE}
+head(mlb[order(mlb$Freq,decreasing = TRUE),])
+wordcloud2(mlb)
+```
+
+
+
